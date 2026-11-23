@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Noche de Perros TV - Todas nuestras redes sociales en un solo lugar" />
+  <title>Noche de Perros TV 🐾</title>
+
+  <style>
+    /* ─── Reset & base ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      background: #07080f;
+      font-family: -apple-system, 'Segoe UI', system-ui, sans-serif;
+      overscroll-behavior: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Variables ──────────────────────────────────────── */
+    :root {
+      --cyan:   #00D4FF;
+      --cyan2:  #00F5FF;
+      --gold:   #FFD700;
+      --pink:   #FF2D78;
+      --purple: #A855F7;
+      --bg:     #07080f;
+      --card:   rgba(0,212,255,0.04);
+    }
+
+    /* ─── Canvas partículas ──────────────────────────────── */
+    #bg-canvas {
+      position: fixed; inset: 0;
+      z-index: 0; pointer-events: none;
+    }
+
+    /* ─── Contenedor principal ───────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 36px 20px 64px;
+    }
+
+    /* ─── LOGO ───────────────────────────────────────────── */
+    .logo-wrap {
+      position: relative;
+      width: 148px; height: 148px;
+      margin-bottom: 10px;
+    }
+    /* Anillo giratório */
+    .logo-wrap::before {
+      content: '';
+      position: absolute; inset: -4px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--cyan) 0%, var(--pink) 30%,
+        var(--gold) 60%, var(--cyan) 100%
+      );
+      animation: spin-ring 5s linear infinite;
+      z-index: 0;
+    }
+    /* Máscara que oculta el interior del anillo */
+    .logo-wrap::after {
+      content: '';
+      position: absolute; inset: 3px;
+      border-radius: 50%;
+      background: var(--bg);
+      z-index: 1;
+    }
+    @keyframes spin-ring {
+      to { transform: rotate(360deg); filter: hue-rotate(360deg); }
+    }
+    .logo-img {
+      position: relative; z-index: 2;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      padding: 6px;
+    }
+
+    /* ─── Título ─────────────────────────────────────────── */
+    .channel-title {
+      font-size: clamp(1.6rem, 7vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-align: center;
+      margin: 8px 0 4px;
+      background: linear-gradient(130deg, var(--cyan) 0%, #fff 40%, var(--cyan2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      animation: shimmer 4s ease-in-out infinite alternate;
+    }
+    @keyframes shimmer {
+      from { filter: brightness(1) drop-shadow(0 0 0px var(--cyan)); }
+      to   { filter: brightness(1.3) drop-shadow(0 0 14px var(--cyan)); }
+    }
+
+    .channel-bio {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.82rem;
+      text-align: center;
+      max-width: 290px;
+      margin: 0 0 26px;
+      line-height: 1.6;
+    }
+
+    /* ─── Stats ──────────────────────────────────────────── */
+    .stats {
+      display: flex; gap: 16px;
+      margin-bottom: 30px;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .stat {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.18);
+      border-radius: 14px;
+      padding: 8px 20px;
+      backdrop-filter: blur(10px);
+    }
+    .stat-n {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--cyan);
+    }
+    .stat-l {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    /* ─── Stack de tarjetas ──────────────────────────────── */
+    .links {
+      display: flex; flex-direction: column; gap: 13px;
+      width: 100%; max-width: 440px;
+    }
+
+    /* ─── Tarjeta base ───────────────────────────────────── */
+    .card {
+      position: relative;
+      display: flex; align-items: center; gap: 15px;
+      padding: 15px 18px;
+      border-radius: 20px;
+      background: var(--card);
+      border: 1px solid rgba(0,212,255,0.08);
+      backdrop-filter: blur(14px);
+      text-decoration: none;
+      color: #fff;
+      overflow: hidden;
+      cursor: pointer;
+      /* entrada */
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fade-up 0.55s cubic-bezier(.22,1,.36,1) forwards;
+      transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease;
+      -webkit-user-select: none; user-select: none;
+    }
+    @keyframes fade-up { to { opacity:1; transform:translateY(0); } }
+
+    /* Borde brillante en hover */
+    .card::before {
+      content:'';
+      position: absolute; inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: var(--g);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    /* Brillo interior en hover */
+    .card::after {
+      content:'';
+      position: absolute; inset: 0;
+      background: var(--g);
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .card:hover::before, .card:active::before { opacity: 1; }
+    .card:hover::after  { opacity: 0.08; }
+    .card:hover  { transform: translateY(-4px) scale(1.025); box-shadow: 0 10px 36px var(--sh); }
+    .card:active { transform: scale(0.96) !important; }
+
+    /* Delays de entrada */
+    .card:nth-child(1) { animation-delay:.08s }
+    .card:nth-child(2) { animation-delay:.16s }
+    .card:nth-child(3) { animation-delay:.24s }
+    .card:nth-child(4) { animation-delay:.32s }
+    .card:nth-child(5) { animation-delay:.40s }
+    .card:nth-child(6) { animation-delay:.48s }
+    .card:nth-child(7) { animation-delay:.56s }
+
+    /* Icono */
+    .c-icon {
+      position: relative; z-index:1;
+      width: 50px; height: 50px; flex-shrink: 0;
+      border-radius: 14px;
+      display: flex; align-items:center; justify-content:center;
+      font-size: 26px;
+      background: var(--ib);
+    }
+    .c-txt { flex:1; position:relative; z-index:1; }
+    .c-platform {
+      font-size: .68rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+    }
+    .c-name { font-size: 1rem; font-weight: 700; }
+    .c-arr {
+      position:relative; z-index:1;
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.25);
+      transition: color .2s, transform .2s;
+    }
+    .card:hover .c-arr { color: rgba(255,255,255,0.75); transform: translateX(4px); }
+
+    /* ─── Paletas por red ────────────────────────────────── */
+    .yt     { --g: linear-gradient(135deg,#FF0000,#FF6B6B); --sh: rgba(255,0,0,.28);     --ib: rgba(255,0,0,.15); }
+    .ig     { --g: linear-gradient(135deg,#F58529,#DD2A7B,#8134AF); --sh: rgba(221,42,123,.28); --ib: rgba(221,42,123,.12); }
+    .tt     { --g: linear-gradient(135deg,#111,#69C9D0,#EE1D52); --sh: rgba(238,29,82,.28);  --ib: rgba(105,201,208,.12); }
+    .fb     { --g: linear-gradient(135deg,#1877F2,#42A4FF); --sh: rgba(24,119,242,.28);  --ib: rgba(24,119,242,.12); }
+    .tw     { --g: linear-gradient(135deg,#111,#444);       --sh: rgba(255,255,255,.1);  --ib: rgba(255,255,255,.07); }
+    .twitch { --g: linear-gradient(135deg,#9146FF,#C9A6FF); --sh: rgba(145,70,255,.32);  --ib: rgba(145,70,255,.13); }
+    .wa     { --g: linear-gradient(135deg,#25D366,#128C7E); --sh: rgba(37,211,102,.28);  --ib: rgba(37,211,102,.12); }
+
+    /* ─── Badge NUEVO ────────────────────────────────────── */
+    .badge {
+      position: absolute; top: -6px; right: 12px;
+      background: var(--pink);
+      color: #fff; font-size: .55rem; font-weight: 800;
+      padding: 2px 9px; border-radius: 20px;
+      letter-spacing: 1px; text-transform: uppercase;
+      box-shadow: 0 2px 10px rgba(255,45,120,.5);
+      animation: pulse-b 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse-b { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+    /* ─── Ripple ─────────────────────────────────────────── */
+    .ripple {
+      position: absolute; border-radius: 50%;
+      background: rgba(255,255,255,.22);
+      transform: scale(0);
+      animation: rpl .55s linear;
+      pointer-events: none;
+    }
+    @keyframes rpl { to { transform: scale(4); opacity: 0; } }
+
+    /* ─── Footer ─────────────────────────────────────────── */
+    .footer {
+      margin-top: 38px;
+      font-size: .62rem;
+      color: rgba(255,255,255,.18);
+      text-align: center;
+      letter-spacing: .8px;
+    }
+
+    /* ─── Scrollbar ──────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,212,255,.3); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="page">
+
+  <!-- LOGO OFICIAL -->
+  <div class="logo-wrap">
+    <img class="logo-img" src="Logo 1.png" alt="Noche de Perros TV" />
+  </div>
+
+  <!-- Nombre -->
+  <h1 class="channel-title">NOCHE DE PERROS TV</h1>
+  <p class="channel-bio">Contenido sin filtros · Podcasts · Entretenimiento<br>🎙️ Únete a la manada</p>
+
+  <!-- Stats decorativas — edita los números con los reales -->
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-n" id="s1">0</span>
+      <span class="stat-l">Suscriptores</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n" id="s2">0</span>
+      <span class="stat-l">Videos</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n" id="s3">0</span>
+      <span class="stat-l">Seguidores</span>
+    </div>
+  </div>
+
+  <!-- ══════════ LINKS — EDITA LAS URLs ══════════ -->
+  <div class="links">
+
+    <!-- YouTube ► CAMBIA EL ENLACE -->
+    <a class="card yt" href="https://youtube.com/@NocheDePerrosTV" target="_blank" rel="noopener noreferrer">
+      <span class="badge">SUSCRÍBETE</span>
+      <div class="c-icon">▶️</div>
+      <div class="c-txt">
+        <div class="c-platform">YouTube</div>
+        <div class="c-name">@NocheDePerrosTV</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- Instagram -->
+    <a class="card ig" href="https://instagram.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">📸</div>
+      <div class="c-txt">
+        <div class="c-platform">Instagram</div>
+        <div class="c-name">@nochedeperrostv</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- TikTok -->
+    <a class="card tt" href="https://tiktok.com/@nochedeperrostv" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">🎵</div>
+      <div class="c-txt">
+        <div class="c-platform">TikTok</div>
+        <div class="c-name">@nochedeperrostv</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- Facebook -->
+    <a class="card fb" href="https://facebook.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">👥</div>
+      <div class="c-txt">
+        <div class="c-platform">Facebook</div>
+        <div class="c-name">Noche de Perros TV</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- X / Twitter -->
+    <a class="card tw" href="https://x.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">✖️</div>
+      <div class="c-txt">
+        <div class="c-platform">X · Twitter</div>
+        <div class="c-name">@nochedeperrostv</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- Twitch -->
+    <a class="card twitch" href="https://twitch.tv/nochedeperrostv" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">🎮</div>
+      <div class="c-txt">
+        <div class="c-platform">Twitch</div>
+        <div class="c-name">nochedeperrostv</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- WhatsApp -->
+    <a class="card wa" href="https://wa.me/521234567890" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">💬</div>
+      <div class="c-txt">
+        <div class="c-platform">WhatsApp</div>
+        <div class="c-name">Comunidad VIP 🔥</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+  </div>
+
+  <p class="footer">🐾 NOCHE DE PERROS TV © 2026</p>
+</div>
+
+<script>
+/* ══ PARTÍCULAS FONDO ══════════════════════════════════ */
+(function(){
+  const cv  = document.getElementById('bg-canvas');
+  const ctx = cv.getContext('2d');
+  const C   = ['#00D4FF','#00F5FF','#FF2D78','#FFD700','#A855F7'];
+  const pts = [];
+
+  function resize(){ cv.width = innerWidth; cv.height = innerHeight; }
+  resize(); addEventListener('resize', resize);
+
+  class P {
+    constructor(){ this.reset(true); }
+    reset(ini){
+      this.x  = Math.random() * cv.width;
+      this.y  = ini ? Math.random() * cv.height : cv.height + 8;
+      this.r  = Math.random() * 2.2 + 0.4;
+      this.vx = (Math.random()-.5) * 0.35;
+      this.vy = -(Math.random() * 0.55 + 0.18);
+      this.a  = Math.random() * 0.45 + 0.15;
+      this.c  = C[Math.floor(Math.random()*C.length)];
+    }
+    tick(){ this.x+=this.vx; this.y+=this.vy; if(this.y<-8) this.reset(); }
+    draw(){
+      ctx.save();
+      ctx.globalAlpha = this.a;
+      ctx.beginPath();
+      ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle = this.c;
+      ctx.shadowColor = this.c;
+      ctx.shadowBlur  = 7;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  for(let i=0;i<75;i++) pts.push(new P());
+  (function loop(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{ p.tick(); p.draw(); });
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ══ CONTADORES ════════════════════════════════════════ */
+// ► Cambia los números finales por los reales de tu canal
+function count(el, target, suffix){
+  let s=0, dur=1800;
+  const run = ts => {
+    if(!s) s=ts;
+    const p = Math.min((ts-s)/dur,1);
+    const e = 1-Math.pow(1-p,3);
+    el.textContent = Math.floor(e*target).toLocaleString('es-MX') + (suffix||'');
+    if(p<1) requestAnimationFrame(run);
+  };
+  requestAnimationFrame(run);
+}
+window.addEventListener('load',()=>{
+  count(document.getElementById('s1'), 1200, 'k');
+  count(document.getElementById('s2'), 87);
+  count(document.getElementById('s3'), 5300, 'k');
+});
+
+/* ══ RIPPLE TÁCTIL ════════════════════════════════════= */
+document.querySelectorAll('.card').forEach(c => {
+  c.addEventListener('pointerdown', function(e){
+    const r = this.getBoundingClientRect();
+    const sz = Math.max(r.width, r.height);
+    const rpl = document.createElement('span');
+    rpl.className = 'ripple';
+    rpl.style.width = rpl.style.height = sz+'px';
+    rpl.style.left = (e.clientX - r.left - sz/2)+'px';
+    rpl.style.top  = (e.clientY - r.top  - sz/2)+'px';
+    this.appendChild(rpl);
+    setTimeout(()=>rpl.remove(), 600);
+  });
+});
+</script>
+</body>
+</html>
