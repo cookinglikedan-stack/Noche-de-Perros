@@ -197,6 +197,8 @@
     .card:nth-child(5) { animation-delay:.40s }
     .card:nth-child(6) { animation-delay:.48s }
     .card:nth-child(7) { animation-delay:.56s }
+    .card:nth-child(8) { animation-delay:.64s }
+    .card:nth-child(9) { animation-delay:.72s }
 
     /* Icono */
     .c-icon {
@@ -225,6 +227,7 @@
 
     /* ─── Paletas por red ────────────────────────────────── */
     .yt     { --g: linear-gradient(135deg,#FF0000,#FF6B6B); --sh: rgba(255,0,0,.28);     --ib: rgba(255,0,0,.15); }
+    .yt2    { --g: linear-gradient(135deg,#CC0000,#FF9999); --sh: rgba(200,0,0,.22);     --ib: rgba(200,0,0,.10); }
     .ig     { --g: linear-gradient(135deg,#F58529,#DD2A7B,#8134AF); --sh: rgba(221,42,123,.28); --ib: rgba(221,42,123,.12); }
     .tt     { --g: linear-gradient(135deg,#111,#69C9D0,#EE1D52); --sh: rgba(238,29,82,.28);  --ib: rgba(105,201,208,.12); }
     .fb     { --g: linear-gradient(135deg,#1877F2,#42A4FF); --sh: rgba(24,119,242,.28);  --ib: rgba(24,119,242,.12); }
@@ -261,6 +264,19 @@
       color: rgba(255,255,255,.18);
       text-align: center;
       letter-spacing: .8px;
+    }
+
+    /* ─── Separador de sección ───────────────────────────── */
+    .section-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(0,212,255,0.5);
+      padding: 6px 0 2px;
+      border-top: 1px solid rgba(0,212,255,0.1);
+      margin-top: 4px;
     }
 
     /* ─── Scrollbar ──────────────────────────────────────── */
@@ -302,29 +318,39 @@
   <!-- ══════════ LINKS — EDITA LAS URLs ══════════ -->
   <div class="links">
 
-    <!-- YouTube ► CAMBIA EL ENLACE -->
-    <a class="card yt" href="https://youtube.com/@NocheDePerrosTV" target="_blank" rel="noopener noreferrer">
+    <!-- YouTube Canal principal -->
+    <a class="card yt" href="https://youtube.com/@nochedeperrostv?si=zOpmpqgxB7EPyk5Z" target="_blank" rel="noopener noreferrer">
       <span class="badge">SUSCRÍBETE</span>
       <div class="c-icon">▶️</div>
       <div class="c-txt">
-        <div class="c-platform">YouTube</div>
-        <div class="c-name">@NocheDePerrosTV</div>
-      </div>
-      <span class="c-arr">›</span>
-    </a>
-
-    <!-- Instagram -->
-    <a class="card ig" href="https://instagram.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">📸</div>
-      <div class="c-txt">
-        <div class="c-platform">Instagram</div>
+        <div class="c-platform">YouTube · Canal</div>
         <div class="c-name">@nochedeperrostv</div>
       </div>
       <span class="c-arr">›</span>
     </a>
 
+    <!-- YouTube Último video -->
+    <a class="card yt2" href="https://www.youtube.com/watch?v=xe4VNNwmLjA" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">🎬</div>
+      <div class="c-txt">
+        <div class="c-platform">YouTube · Último Video</div>
+        <div class="c-name">Ver ahora 🔥</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- Instagram -->
+    <a class="card ig" href="https://www.instagram.com/nochedeperros_tv?lqvp=MXB3NnVtazFqMW5uNQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">📸</div>
+      <div class="c-txt">
+        <div class="c-platform">Instagram</div>
+        <div class="c-name">@nochedeperros_tv</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
     <!-- TikTok -->
-    <a class="card tt" href="https://tiktok.com/@nochedeperrostv" target="_blank" rel="noopener noreferrer">
+    <a class="card tt" href="https://vt.tiktok.com/ZSsLcDptd/" target="_blank" rel="noopener noreferrer">
       <div class="c-icon">🎵</div>
       <div class="c-txt">
         <div class="c-platform">TikTok</div>
@@ -334,41 +360,34 @@
     </a>
 
     <!-- Facebook -->
-    <a class="card fb" href="https://facebook.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
+    <a class="card fb" href="https://www.facebook.com/NochedePerrosTV?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
       <div class="c-icon">👥</div>
       <div class="c-txt">
         <div class="c-platform">Facebook</div>
-        <div class="c-name">Noche de Perros TV</div>
+        <div class="c-name">NochedePerrosTV</div>
       </div>
       <span class="c-arr">›</span>
     </a>
 
-    <!-- X / Twitter -->
-    <a class="card tw" href="https://x.com/nochedeperrostv" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">✖️</div>
-      <div class="c-txt">
-        <div class="c-platform">X · Twitter</div>
-        <div class="c-name">@nochedeperrostv</div>
-      </div>
-      <span class="c-arr">›</span>
-    </a>
+    <!-- Separador "Contacto" -->
+    <div class="section-label">📞 Contacto directo</div>
 
-    <!-- Twitch -->
-    <a class="card twitch" href="https://twitch.tv/nochedeperrostv" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">🎮</div>
-      <div class="c-txt">
-        <div class="c-platform">Twitch</div>
-        <div class="c-name">nochedeperrostv</div>
-      </div>
-      <span class="c-arr">›</span>
-    </a>
-
-    <!-- WhatsApp -->
-    <a class="card wa" href="https://wa.me/521234567890" target="_blank" rel="noopener noreferrer">
+    <!-- WhatsApp Gus -->
+    <a class="card wa" href="https://wa.me/523330156400" target="_blank" rel="noopener noreferrer">
       <div class="c-icon">💬</div>
       <div class="c-txt">
-        <div class="c-platform">WhatsApp</div>
-        <div class="c-name">Comunidad VIP 🔥</div>
+        <div class="c-platform">WhatsApp · Productor</div>
+        <div class="c-name">Gus Gómez</div>
+      </div>
+      <span class="c-arr">›</span>
+    </a>
+
+    <!-- WhatsApp Cami -->
+    <a class="card wa" href="https://wa.me/523311541120" target="_blank" rel="noopener noreferrer">
+      <div class="c-icon">💬</div>
+      <div class="c-txt">
+        <div class="c-platform">WhatsApp · Contacto</div>
+        <div class="c-name">Cami Gómez</div>
       </div>
       <span class="c-arr">›</span>
     </a>
@@ -457,3 +476,4 @@ document.querySelectorAll('.card').forEach(c => {
 </script>
 </body>
 </html>
+
