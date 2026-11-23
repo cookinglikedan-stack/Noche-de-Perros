@@ -208,6 +208,12 @@
       display: flex; align-items:center; justify-content:center;
       font-size: 26px;
       background: var(--ib);
+      overflow: hidden;
+    }
+    .c-icon img {
+      width: 32px; height: 32px;
+      object-fit: contain;
+      display: block;
     }
     .c-txt { flex:1; position:relative; z-index:1; }
     .c-platform {
@@ -321,7 +327,7 @@
     <!-- YouTube Canal principal -->
     <a class="card yt" href="https://youtube.com/@nochedeperrostv?si=zOpmpqgxB7EPyk5Z" target="_blank" rel="noopener noreferrer">
       <span class="badge">SUSCRÍBETE</span>
-      <div class="c-icon">▶️</div>
+      <div class="c-icon"><img src="Logo_youtube.png" alt="YouTube" /></div>
       <div class="c-txt">
         <div class="c-platform">YouTube · Canal</div>
         <div class="c-name">@nochedeperrostv</div>
@@ -331,7 +337,7 @@
 
     <!-- YouTube Último video -->
     <a class="card yt2" href="https://www.youtube.com/watch?v=xe4VNNwmLjA" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">🎬</div>
+      <div class="c-icon"><img src="Logo_youtube.png" alt="YouTube" /></div>
       <div class="c-txt">
         <div class="c-platform">YouTube · Último Video</div>
         <div class="c-name">Ver ahora 🔥</div>
@@ -341,7 +347,7 @@
 
     <!-- Instagram -->
     <a class="card ig" href="https://www.instagram.com/nochedeperros_tv?lqvp=MXB3NnVtazFqMW5uNQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">📸</div>
+      <div class="c-icon"><img src="Logo_instagram.png" alt="Instagram" /></div>
       <div class="c-txt">
         <div class="c-platform">Instagram</div>
         <div class="c-name">@nochedeperros_tv</div>
@@ -351,7 +357,7 @@
 
     <!-- TikTok -->
     <a class="card tt" href="https://vt.tiktok.com/ZSsLcDptd/" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">🎵</div>
+      <div class="c-icon"><img src="Logo_tiktok.png" alt="TikTok" /></div>
       <div class="c-txt">
         <div class="c-platform">TikTok</div>
         <div class="c-name">@nochedeperrostv</div>
@@ -361,7 +367,7 @@
 
     <!-- Facebook -->
     <a class="card fb" href="https://www.facebook.com/NochedePerrosTV?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">👥</div>
+      <div class="c-icon"><img src="Logo_facebook.png" alt="Facebook" /></div>
       <div class="c-txt">
         <div class="c-platform">Facebook</div>
         <div class="c-name">NochedePerrosTV</div>
@@ -374,7 +380,7 @@
 
     <!-- WhatsApp Gus -->
     <a class="card wa" href="https://wa.me/523330156400" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">💬</div>
+      <div class="c-icon"><img src="Logo_whatsapp.png" alt="WhatsApp" /></div>
       <div class="c-txt">
         <div class="c-platform">WhatsApp · Productor</div>
         <div class="c-name">Gus Gómez</div>
@@ -384,7 +390,7 @@
 
     <!-- WhatsApp Cami -->
     <a class="card wa" href="https://wa.me/523311541120" target="_blank" rel="noopener noreferrer">
-      <div class="c-icon">💬</div>
+      <div class="c-icon"><img src="Logo_whatsapp.png" alt="WhatsApp" /></div>
       <div class="c-txt">
         <div class="c-platform">WhatsApp · Contacto</div>
         <div class="c-name">Cami Gómez</div>
